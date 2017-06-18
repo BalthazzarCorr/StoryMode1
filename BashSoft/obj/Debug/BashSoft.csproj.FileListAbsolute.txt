@@ -1,0 +1,6 @@
+c:\users\balth\documents\visual studio 2017\Projects\StoryMode\BashSoft\bin\Debug\BashSoft.exe.config
+c:\users\balth\documents\visual studio 2017\Projects\StoryMode\BashSoft\bin\Debug\BashSoft.exe
+c:\users\balth\documents\visual studio 2017\Projects\StoryMode\BashSoft\bin\Debug\BashSoft.pdb
+c:\users\balth\documents\visual studio 2017\Projects\StoryMode\BashSoft\obj\Debug\BashSoft.csprojResolveAssemblyReference.cache
+c:\users\balth\documents\visual studio 2017\Projects\StoryMode\BashSoft\obj\Debug\BashSoft.exe
+c:\users\balth\documents\visual studio 2017\Projects\StoryMode\BashSoft\obj\Debug\BashSoft.pdb
