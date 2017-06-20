@@ -43,14 +43,14 @@ namespace BashSoft
 				for (int line = 0; line < allInputLines.Length; line++)
 				{
 
-					if (!string.IsNullOrEmpty(allInputLines[line]) && rgx.IsMatch(allInputLines[line]))
+					if (!String.IsNullOrEmpty(allInputLines[line]) && rgx.IsMatch(allInputLines[line]))
 					{
 						Match currentMatch = rgx.Match(allInputLines[line]);
 
 						string courseName = currentMatch.Groups[1].Value;
 						string username = currentMatch.Groups[2].Value;
 						int studentScoreOnTask;
-						bool hasParsedScore = int.TryParse(currentMatch.Groups[3].Value, out studentScoreOnTask);
+						bool hasParsedScore = Int32.TryParse(currentMatch.Groups[3].Value, out studentScoreOnTask);
 
 						if (hasParsedScore && studentScoreOnTask >= 0 && studentScoreOnTask <= 100)
 						{
@@ -74,34 +74,33 @@ namespace BashSoft
 
 			
 
-			//while (!string.IsNullOrEmpty(input))
-			//{
-			//	string[] tokens = input.Split(' ');
-
-			//	string course = tokens[0];
-
-			//	string student = tokens[1];
-
-			//	int mark = int.Parse(tokens[2]);
-
-			//	if (!studentsByCourse.ContainsKey(course))
-			//	{
-			//		studentsByCourse.Add(course,new Dictionary<string, List<int>>());
-					
-			//	}
-			//	if (!studentsByCourse[course].ContainsKey(student))
-			//	{
-			//		studentsByCourse[course].Add(student,new List<int>());
-			//	}
-
-			//	studentsByCourse[course][student].Add(mark);
-
-			//	input= Console.ReadLine();
-			//}
-
 			isDataInitialized = true;
 
 			OutputWriter.WriteMessageNewLine("Data read!");
+		}
+
+		public static void FilterAndTake(string courseName, string givenFilter, int? studentToTake = null)
+		{
+			if (StudentsRepository.IsQueryForCoursePossible(courseName))
+			{
+				if (studentToTake == null)
+				{
+					studentToTake = studentsByCourse[courseName].Count;
+				}
+				RepositoryFilters.FilterAndTake(studentsByCourse[courseName],givenFilter,studentToTake.Value);
+			}
+		}
+
+		public static void OrderAndTake(string courseName,string comparison, int? studentToTake = null)
+		{
+			if (IsQueryForCoursePossible(courseName))
+			{
+				if (studentToTake == null)
+				{
+					studentToTake = studentsByCourse[courseName].Count;
+				}
+				SortedRepositrory.OrderAndTake(studentsByCourse[courseName],comparison,studentToTake.Value);
+			}
 		}
 
 		private static bool IsQueryForCoursePossible(string courseName)
