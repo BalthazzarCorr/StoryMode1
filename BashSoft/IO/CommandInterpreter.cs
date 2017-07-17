@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BashSoft.IO.Commands;
 
 namespace BashSoft
 {
@@ -23,10 +24,11 @@ namespace BashSoft
       public void InterpredCommand(string input)
       {
          string[] data = input.Split(' ');
-         string command = data[0];
+         string commandName = data[0];
          try
          {
-            this.ParseCommand(input, command, data);
+            Command command = this.ParseCommand(input, commandName, data);
+            command.Execute();
          }
          catch (DirectoryNotFoundException dnfe)
          {
@@ -47,45 +49,42 @@ namespace BashSoft
 
       }
 
-      private void ParseCommand(string input, string command, string[] data)
+      private Command ParseCommand(string input, string command, string[] data)
       {
          switch (command)
          {
             case "open":
-               TryOpenFile(data);
-               break;
+
+               return new OpenFileCommand(input, data, this.judge, this.repository, this.inputOutputManager);
+
             case "mkdir":
-               TryCreateDirectory(data);
-               break;
+
+               return new MakeDirectoryCommand(input, data, this.judge, this.repository, this.inputOutputManager);
             case "ls":
-               TryTraveseFolders(input, data);
-               break;
+               return new TraverseFoldersCommand(input, data, this.judge, this.repository, this.inputOutputManager);
             case "cmp":
-               TryCompareFiles(input, data);
-               break;
-            case "cdRel":
-               TryChangePathRelatively(input, data);
-               break;
-            case "cdAbs":
-               TryChangePathAbsolute(input, data);
-               break;
-            case "readDb":
-               TryReadDatabaseFromFile(input, data);
-               break;
+               return new CompareFileCommand(input, data, this.judge, this.repository, this.inputOutputManager);
+            case "cdrel":
+               return new ChangePathRelativelyCommand(input, data, this.judge, this.repository, this.inputOutputManager);
+            case "cdabs":
+               return new ChangePathAbsoluteCommand(input, data, this.judge, this.repository, this.inputOutputManager);
+
+            case "readdb":
+               return new ReadDatabaseCommand(input, data, this.judge, this.repository, this.inputOutputManager);
+              
             case "help":
-               TryGetHelp();
-               break;
+              return new GetHelpCommand(input, data, this.judge, this.repository, this.inputOutputManager);
+               
             case "show":
-               TryShowWantedData(input, data);
-               break;
+             return   new ShowCourseCommand(input, data, this.judge, this.repository, this.inputOutputManager);
+              
             case "filter":
-               TryFilterAndTake(input, data);
-               break;
+            return new PrintFilteredStudentsCommand(input, data, this.judge, this.repository, this.inputOutputManager);
+              
             case "order":
-               TryOrderAndTake(input, data);
-               break;
-            case "decoder":
-               break;
+              return new  PrintOrderedStudentsCommand(input, data, this.judge, this.repository, this.inputOutputManager);
+            case "dropdb":
+            return  new DropDatabaseCommand(input, data, this.judge, this.repository, this.inputOutputManager);
             case "download":
                break;
             case "downloadAsynch":
@@ -94,7 +93,7 @@ namespace BashSoft
                DisplayInvalidCommandMessage(input);
                break;
          }
-        
+
       }
 
       private void TryShowWantedData(string input, string[] data)
@@ -118,16 +117,16 @@ namespace BashSoft
       }
 
 
-      private void TryOpenFile(string[] data)
-      {
-         if (data.Length == 2)
-         {
+      //private void TryOpenFile(string[] data)
+      //{
+      //   if (data.Length == 2)
+      //   {
 
-            string fileName = data[1];
-            Process.Start(SessionData.currentPath + "\\" + fileName);
+      //      string fileName = data[1];
+      //      Process.Start(SessionData.currentPath + "\\" + fileName);
 
-         }
-      }
+      //   }
+      //}
 
       private void TryCreateDirectory(string[] data)
       {

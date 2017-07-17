@@ -85,7 +85,7 @@ namespace BashSoft
 				}
 				catch (ArgumentOutOfRangeException)
 				{
-					throw new ArgumentOutOfRangeException("indexOfLastSlash",ExceptionMessages.InvalidPath);
+					throw new InvalidFileNameException();
 				}
 
 			}
@@ -101,7 +101,7 @@ namespace BashSoft
 		{
 			if (!Directory.Exists(absolutePath))
 			{
-				throw  new DirectoryNotFoundException(ExceptionMessages.InvalidPath);
+				throw  new InvalidFileNameException();
 				return;
 			}
 			SessionData.currentPath = absolutePath;
