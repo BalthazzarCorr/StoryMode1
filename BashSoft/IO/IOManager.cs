@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using BashSoft.Exceptions;
 
 namespace BashSoft
 {
-	public static class IOManager
+	using System;
+	using System.Collections.Generic;
+	using System.IO;
+
+
+	public  class IOManager
 	{
-		public static void TraverseDirectory(int depth)
+		public void TraverseDirectory(int depth)
 		{
 			OutputWriter.WriteEmptyLine();
 			int initialIdentitation = SessionData.currentPath.Split('\\').Length;
@@ -27,7 +28,7 @@ namespace BashSoft
 					break;
 				}
 
-				
+
 
 				try
 				{
@@ -51,14 +52,14 @@ namespace BashSoft
 				}
 			}
 
-			
 
 
-			
+
+
 
 		}
 
-		public static void CreateDirectoryInCurrenntFolder(string name)
+		public  void CreateDirectoryInCurrenntFolder(string name)
 		{
 			string path = SessionData.currentPath + "\\" + name;
 			try
@@ -67,11 +68,11 @@ namespace BashSoft
 			}
 			catch (ArgumentException)
 			{
-				OutputWriter.DisplayExpetion(ExceptionMessages.ForbiddenSymbolsContainedInName);
+				throw  new InvalidFileNameException();
 			}
 		}
 
-		public static void ChaneCurrentDirectoryRelative(string relativePath)
+		public  void ChaneCurrentDirectoryRelative(string relativePath)
 		{
 			if (relativePath == "..")
 			{
@@ -84,7 +85,7 @@ namespace BashSoft
 				}
 				catch (ArgumentOutOfRangeException)
 				{
-					OutputWriter.DisplayExpetion(ExceptionMessages.UnabelToGoHigherInPartitionHierarchy);
+					throw new ArgumentOutOfRangeException("indexOfLastSlash",ExceptionMessages.InvalidPath);
 				}
 
 			}
@@ -96,11 +97,11 @@ namespace BashSoft
 			}
 		}
 
-		public static void ChaneCurrentDirectoryAbsolute(string absolutePath)
+		public  void ChaneCurrentDirectoryAbsolute(string absolutePath)
 		{
 			if (!Directory.Exists(absolutePath))
 			{
-				OutputWriter.DisplayExpetion(ExceptionMessages.InvalidPath);
+				throw  new DirectoryNotFoundException(ExceptionMessages.InvalidPath);
 				return;
 			}
 			SessionData.currentPath = absolutePath;

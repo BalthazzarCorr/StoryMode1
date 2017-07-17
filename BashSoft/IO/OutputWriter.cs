@@ -34,9 +34,9 @@ namespace BashSoft
 			Console.ForegroundColor = currentColor;
 		}
 
-		public static void DisplayStudent(KeyValuePair<string, List<int>> student)
+		public static void DisplayStudent(KeyValuePair<string, double> student)
 		{
-			OutputWriter.WriteMessageNewLine(string.Format($"{student.Key} - {string.Join(", ", student.Value)}"));
+			OutputWriter.WriteMessageNewLine($"{student.Key} - {student.Value}");
 		}
 	}
 }
