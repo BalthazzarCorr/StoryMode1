@@ -35,10 +35,10 @@ namespace BashSoft
 
       public const string InvalidTakeQuantityParameter = "The take command expected does not match the format wanted!";
 
-     
 
-     
-    
+
+      public const string InvalidTakeCommandParameter = "The take command expected does not match the format wanted!";
+
 
       public const string InvalidScore = "The number for the score you've entered is not in the range of 0 - 100";
 

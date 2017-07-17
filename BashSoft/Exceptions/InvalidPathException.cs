@@ -6,7 +6,20 @@ using System.Threading.Tasks;
 
 namespace BashSoft.Exceptions
 {
-   class InvalidPathException
+   public class InvalidPathException : Exception
    {
+      public const string InvalidPath =
+         "The folder/file you are trying to access at the current address, does not exist.";
+
+      public InvalidPathException(string message)
+         : base(message)
+      {
+
+      }
+   
+      public InvalidPathException() : base(InvalidPath)
+      {
+         
+      }
    }
 }

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using BashSoft.Exceptions;
 using BashSoft.Models;
 
 namespace BashSoft
@@ -46,7 +47,7 @@ namespace BashSoft
       {
          if (!this.isDataInitialized)
          {
-           throw new ArgumentException(ExceptionMessages.DataNotInitializedExeptionMessage);
+           throw new ArgumentException(ExceptionMessages.DataNotInitializedExceptionMessage);
             
          }
          this.students = null;
@@ -94,8 +95,7 @@ namespace BashSoft
                      }
                      if (scores.Length > Course.NumberOfTasksOnExam)
                      {
-                        OutputWriter.DisplayExpetion(ExceptionMessages.InvalidNumberOfScores);
-                        continue;
+                      throw new InvalidNumberOfScoreException();
 
                      }
 
@@ -169,7 +169,7 @@ namespace BashSoft
          }
          else
          {
-            OutputWriter.DisplayExpetion(ExceptionMessages.DataNotInitializedExeptionMessage);
+            OutputWriter.DisplayExpetion(ExceptionMessages.DataNotInitializedExceptionMessage);
          }
          //return false;
 

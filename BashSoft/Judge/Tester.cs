@@ -1,4 +1,6 @@
 ﻿
+using BashSoft.Exceptions;
+
 namespace BashSoft
 {
 	using System;
@@ -49,7 +51,7 @@ namespace BashSoft
 				}
 				catch (DirectoryNotFoundException)
 				{
-					OutputWriter.DisplayExpetion(ExceptionMessages.InvalidPath);
+					throw new InvalidPathException();
 				}
 				return;
 			}
